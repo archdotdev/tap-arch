@@ -31,9 +31,8 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      TAP_ARCH_ORG_IDS: ${{secrets.TAP_ARCH_ORG_IDS}}
-      TAP_ARCH_AUTH_TOKEN: ${{secrets.TAP_ARCH_AUTH_TOKEN}}
+      TAP_ARCH_ORG_IDS: ${{ secrets.TAP_ARCH_ORG_IDS }}
+      TAP_ARCH_AUTH_TOKEN: ${{ secrets.TAP_ARCH_AUTH_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
