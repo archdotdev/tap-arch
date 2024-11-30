@@ -1,0 +1,3 @@
+I'm going to give you part of a jsonschema specification describing a component.
+It will contain references to other components. For some of these components, I want to full resolve the reference and replace it with the referenced component jsonschema. For others, I want to replace the reference with an ID that will be used to join to the referenced object.
+For each reference, I want you to ask me how I'd like to resolve it. If I respond with a jsonschema, you will replace the reference with the full jsonschema. If I respond with the name of an ID, for instance meltano_plugin_id, then you will merely replace the reference with a meltano_plugin_id key that has a string value.

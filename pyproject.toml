@@ -1,0 +1,67 @@
+[tool.poetry]
+name = "tap-arch"
+version = "0.0.1"
+description = "Singer tap for Arch, built with the Meltano Singer SDK."
+readme = "README.md"
+authors = ["Cody Hanson <cody@arch.dev>"]
+keywords = [
+    "ELT",
+    "Arch",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+license = "Apache-2.0"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+singer-sdk = { version="~=0.42.1", extras = ["faker",] }
+fs-s3fs = { version = "~=1.1.1", optional = true }
+requests = "~=2.32.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8"
+singer-sdk = { version="~=0.42.1", extras = ["testing"] }
+jsonref = "^1.1.0"
+
+[tool.poetry.extras]
+s3 = ["fs-s3fs"]
+
+[tool.pytest.ini_options]
+addopts = '--durations=10'
+
+[tool.mypy]
+python_version = "3.12"
+warn_unused_configs = true
+
+[tool.ruff]
+target-version = "py39"
+
+[tool.ruff.lint]
+ignore = [
+    "ANN101",  # missing-type-self
+    "ANN102",  # missing-type-cls
+    "COM812",  # missing-trailing-comma
+    "ISC001",  # single-line-implicit-string-concatenation
+]
+select = ["ALL"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+# CLI declaration
+tap-arch = 'tap_arch.tap:TapArch.cli'

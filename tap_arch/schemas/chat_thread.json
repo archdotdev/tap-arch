@@ -1,0 +1,29 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^chat-thread-[a-zA-Z0-9]{8}$",
+      "format": "arch-chat-thread-id",
+      "title": "Id",
+      "description": "Arch chat thread ID.",
+      "examples": [
+        "chat-thread-abcdef12",
+        "chat-thread-tarch230",
+        "chat-thread-3me1ty44"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "name"
+  ],
+  "title": "ChatThread",
+  "description": "Chat thread model."
+}

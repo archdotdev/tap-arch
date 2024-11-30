@@ -1,0 +1,29 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 23,
+      "minLength": 23,
+      "pattern": "^git_repository-[a-zA-Z0-9]{8}$",
+      "format": "arch-git_repository-id",
+      "title": "Id",
+      "description": "Git repository ID.",
+      "examples": [
+        "git_repository-abcdef12",
+        "git_repository-tarch230",
+        "git_repository-3me1ty44"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "title": "Url"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "url"
+  ],
+  "title": "GitRepository",
+  "description": "Git repository schema."
+}
