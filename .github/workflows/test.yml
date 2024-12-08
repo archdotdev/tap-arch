@@ -31,8 +31,8 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
     env:
-      TAP_ARCH_ORG_IDS: ${{ secrets.TAP_ARCH_ORG_IDS }}
-      TAP_ARCH_AUTH_TOKEN: ${{ secrets.TAP_ARCH_AUTH_TOKEN }}
+      TAP_ARCH_ORG_IDS: ${{secrets.TAP_ARCH_ORG_IDS}}
+      TAP_ARCH_AUTH_TOKEN: ${{secrets.TAP_ARCH_AUTH_TOKEN}}
     strategy:
       fail-fast: false
       matrix:
@@ -48,13 +48,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
+    - run: pipx install tox
+    - name: Run Tox
       run: |
-        pip install poetry
-    - name: Install dependencies
-      run: |
-        poetry env use ${{ matrix.python-version }}
-        poetry install
-    - name: Test with pytest
-      run: |
-        poetry run pytest
+        tox -e $(echo py${{ matrix.python-version }} | tr -d .)

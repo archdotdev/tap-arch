@@ -1,14 +1,14 @@
 """Tests standard tap features using the built-in SDK tests library."""
 
-import os
+from os import environ
 
 from singer_sdk.testing import get_tap_test_class
 
 from tap_arch.tap import TapArch
 
 SAMPLE_CONFIG = {
-    "auth_token": os.environ.get("TAP_ARCH_AUTH_TOKEN"),
-    "org_ids": os.environ.get("TAP_ARCH_ORG_IDS"),
+    "auth_token": environ["TAP_ARCH_AUTH_TOKEN"],
+    "org_ids": environ["TAP_ARCH_ORG_IDS"],
 }
 
 
