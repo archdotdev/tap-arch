@@ -113,6 +113,15 @@ class TenantsStream(ArchStream):
         }
 
 
+class ConnectorsStream(ArchStream):
+    """Define Connectors stream."""
+
+    name = "connectors"
+    path = "/v1/orgs/{org_id}/projects/{project_id}/connectors/"
+    schema_filepath = SCHEMAS_DIR / "meltano_plugin.json"
+    parent_stream_type = ProjectsStream
+
+
 class PipelinesStream(ArchStream):
     """Define Pipelines stream."""
 

@@ -62,6 +62,7 @@ class TapArch(Tap):
             streams.WebhooksStream(self),
             streams.ChatThreadsStream(self),
             streams.ChatMessagesStream(self),
+            streams.ConnectorsStream(self),
         ]
 
 
