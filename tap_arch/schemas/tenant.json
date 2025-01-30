@@ -1,0 +1,83 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 15,
+      "pattern": "^tenant-[a-zA-Z0-9]{8}$",
+      "format": "arch-tenant-id",
+      "title": "Id",
+      "description": "Arch tenant ID.",
+      "examples": ["tenant-abcdef12", "tenant-tarch230", "tenant-3me1ty44"]
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "external_id": {
+      "type": "string",
+      "maxLength": 63,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9\\-]{1,63}$",
+      "format": "arch-tenant-id",
+      "title": "External Id",
+      "description": "The ID of the tenant. Must be unique within a project."
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "project_id": {
+      "type": "string",
+      "title": "Project Id"
+    },
+    "database_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 11,
+          "minLength": 11,
+          "pattern": "^db-[a-z0-9]{8}$",
+          "format": "arch-db-id",
+          "description": "Arch database ID.",
+          "examples": ["db-abcdef12", "db-tarch230", "db-3me1ty44"]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Database Id"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "health": {
+      "type": "string",
+      "enum": ["healthy", "unhealthy", "needs_attention"],
+      "title": "TenantHealthStatus",
+      "description": "Health states for tenants."
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "description",
+    "external_id",
+    "name",
+    "project_id",
+    "database_id",
+    "created_at",
+    "health"
+  ],
+  "title": "Tenant",
+  "description": "Tenant model for /tenants/ API."
+}

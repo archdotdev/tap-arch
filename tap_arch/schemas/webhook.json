@@ -1,0 +1,64 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 16,
+      "minLength": 16,
+      "pattern": "^webhook-[a-zA-Z0-9]{8}$",
+      "format": "arch-webhook-id",
+      "title": "Id",
+      "description": "Webhook ID.",
+      "examples": ["webhook-abcdef12", "webhook-tarch230", "webhook-3me1ty44"]
+    },
+    "project_id": {
+      "type": "string",
+      "maxLength": 16,
+      "minLength": 16,
+      "pattern": "^project-[a-zA-Z0-9]{8}$",
+      "format": "arch-project-id",
+      "title": "Project Id",
+      "description": "Arch project ID.",
+      "examples": ["project-abcdef12", "project-tarch230", "project-3me1ty44"]
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "url": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 2083,
+          "minLength": 1,
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Url"
+    },
+    "hmac_secret_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Hmac Secret Key"
+    }
+  },
+  "type": "object",
+  "required": ["id", "project_id", "description"],
+  "title": "Webhook",
+  "description": "Webhook model including encrypted fields."
+}

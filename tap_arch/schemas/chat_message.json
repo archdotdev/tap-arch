@@ -1,0 +1,75 @@
+{
+  "properties": {
+    "sender_type": {
+      "type": "string",
+      "enum": ["user", "tool", "ai"],
+      "title": "ChatMessageSenderTypeEnum",
+      "description": "Sender type."
+    },
+    "sender_name": {
+      "type": "string",
+      "title": "Sender Name"
+    },
+    "text": {
+      "type": "string",
+      "title": "Text"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["processing", "complete", "error"],
+      "title": "ChatMessageStatusEnum",
+      "description": "Message status."
+    },
+    "thread_id": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^chat-thread-[a-zA-Z0-9]{8}$",
+      "format": "arch-chat-thread-id",
+      "title": "Thread Id",
+      "description": "Arch chat thread ID.",
+      "examples": [
+        "chat-thread-abcdef12",
+        "chat-thread-tarch230",
+        "chat-thread-3me1ty44"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "maxLength": 21,
+      "minLength": 21,
+      "pattern": "^chat-message-[a-zA-Z0-9]{8}$",
+      "format": "arch-chat-message-id",
+      "title": "Id",
+      "description": "Arch chat message ID.",
+      "examples": [
+        "chat-message-abcdef12",
+        "chat-message-tarch230",
+        "chat-message-3me1ty44"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+    }
+  },
+  "type": "object",
+  "required": [
+    "sender_type",
+    "sender_name",
+    "text",
+    "status",
+    "thread_id",
+    "id",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "ChatMessage",
+  "description": "Chat message model."
+}

@@ -1,0 +1,177 @@
+{
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": ["arch_postgres", "snowflake"],
+      "title": "Kind"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "id": {
+      "type": "string",
+      "title": "Id"
+    },
+    "tenant_id": {
+      "type": "string",
+      "title": "Tenant Id"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+    },
+    "state": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "Configuring",
+            "Deleted",
+            "Deleting",
+            "Error",
+            "Restarting",
+            "Starting",
+            "Stopped",
+            "Stopping",
+            "Submitted",
+            "Up"
+          ]
+        }
+      ],
+      "title": "State"
+    },
+    "cpu": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "enum": ["0.25", "0.5", "1", "2", "4", "6", "8", "12", "16", "32"]
+        }
+      ],
+      "title": "Cpu"
+    },
+    "environment": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "enum": ["dev", "prod", "test"]
+        }
+      ],
+      "title": "Environment"
+    },
+    "memory": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "1Gi",
+            "2Gi",
+            "4Gi",
+            "8Gi",
+            "12Gi",
+            "16Gi",
+            "24Gi",
+            "32Gi",
+            "64Gi"
+          ]
+        }
+      ],
+      "title": "Memory"
+    },
+    "replicas": {
+      "type": ["integer", "null"],
+      "title": "Replicas"
+    },
+    "storage": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "10Gi",
+            "50Gi",
+            "100Gi",
+            "200Gi",
+            "300Gi",
+            "400Gi",
+            "500Gi",
+            "1Ti",
+            "1.5Ti",
+            "2Ti"
+          ]
+        }
+      ],
+      "title": "Storage"
+    },
+    "hosts": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      ],
+      "title": "Hosts"
+    },
+    "port": {
+      "type": ["integer", "null"],
+      "title": "Port"
+    },
+    "account": {
+      "type": ["string", "null"],
+      "title": "Account"
+    },
+    "database": {
+      "type": ["string", "null"],
+      "title": "Database"
+    },
+    "warehouse": {
+      "type": ["string", "null"],
+      "title": "Warehouse"
+    },
+    "role": {
+      "type": ["string", "null"],
+      "title": "Role"
+    }
+  },
+  "type": "object",
+  "required": [
+    "kind",
+    "name",
+    "description",
+    "id",
+    "tenant_id",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "Database",
+  "description": "Database configuration."
+}

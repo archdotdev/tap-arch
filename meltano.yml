@@ -1,0 +1,33 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: tap-arch
+default_environment: test
+environments:
+- name: test
+plugins:
+  extractors:
+  - name: tap-arch
+    namespace: tap_arch
+    pip_url: -e .
+    executable: tap-arch
+    capabilities:
+    - catalog
+    - discover
+    - properties
+    - state
+    settings:
+    - name: auth_token
+      kind: password
+      sensitive: true
+    - name: org_ids
+      kind: array
+    - name: start_date
+      kind: date_iso8601
+    - name: api_url
+      kind: string
+    - name: user_agent
+      kind: string
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
