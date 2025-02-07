@@ -35,63 +35,48 @@ class OrgsStream(ArchStream):
             yield from super().get_records(context)
 
 
-class ProjectsStream(ArchStream):
-    """Define custom stream."""
-
-    name = "projects"
-    parent_stream_type = OrgsStream
-    replication_key = None
-    schema_filepath = SCHEMAS_DIR / "project.json"
-    path = "/v1/orgs/{org_id}/projects/"
-
-    def get_child_context(self, record: dict, context: dict | None) -> dict:
-        """Return a context dictionary for a child stream."""
-        return {"org_id": context["org_id"], "project_id": record["id"]}
-
-
 class GitRepositoriesStream(ArchStream):
-    """Define Tenants stream."""
+    """Define Git Repositories stream."""
 
     name = "git_repositories"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/git_repositories/"
+    path = "/v1/orgs/{org_id}/git_repositories/"
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "git_repository.json"
-    parent_stream_type = ProjectsStream
+    parent_stream_type = OrgsStream
 
 
 class WebhooksStream(ArchStream):
-    """Define Tenants stream."""
+    """Define Webhooks stream."""
 
     name = "webhooks"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/webhooks/"
+    path = "/v1/orgs/{org_id}/webhooks/"
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "webhook.json"
-    parent_stream_type = ProjectsStream
+    parent_stream_type = OrgsStream
 
 
 class ChatThreadsStream(ArchStream):
-    """Define Tenants stream."""
+    """Define Chat Threads stream."""
 
     name = "chat_threads"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/chats/"
+    path = "/v1/orgs/{org_id}/chats/"
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "chat_thread.json"
-    parent_stream_type = ProjectsStream
+    parent_stream_type = OrgsStream
 
     def get_child_context(self, record: dict, context: dict | None) -> dict:
         """Return a context dictionary for a child stream."""
         return {
             "org_id": context["org_id"],
-            "project_id": context["project_id"],
             "chat_thread_id": record["id"],
         }
 
 
 class ChatMessagesStream(ArchStream):
-    """Define Tenants stream."""
+    """Define Chat Messages stream."""
 
     name = "chat_messages"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/chats/{chat_thread_id}/messages"
+    path = "/v1/orgs/{org_id}/chats/{chat_thread_id}/messages/"
     schema_filepath = SCHEMAS_DIR / "chat_message.json"
     parent_stream_type = ChatThreadsStream
 
@@ -100,15 +85,14 @@ class TenantsStream(ArchStream):
     """Define Tenants stream."""
 
     name = "tenants"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/tenants/"
+    path = "/v1/orgs/{org_id}/tenants/"
     schema_filepath = SCHEMAS_DIR / "tenant.json"
-    parent_stream_type = ProjectsStream
+    parent_stream_type = OrgsStream
 
     def get_child_context(self, record: dict, context: dict | None) -> dict:
         """Return a context dictionary for a child stream."""
         return {
             "org_id": context["org_id"],
-            "project_id": context["project_id"],
             "tenant_id": record["id"],
         }
 
@@ -117,19 +101,17 @@ class ConnectorsStream(ArchStream):
     """Define Connectors stream."""
 
     name = "connectors"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/connectors/"
+    path = "/v1/orgs/{org_id}/connectors/"
     schema_filepath = SCHEMAS_DIR / "meltano_plugin.json"
-    parent_stream_type = ProjectsStream
+    parent_stream_type = OrgsStream
 
 
 class PipelinesStream(ArchStream):
     """Define Pipelines stream."""
 
     name = "pipelines"
-
-    path = "/v1/orgs/{org_id}/projects/{project_id}/tenants/{tenant_id}/pipelines/"
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/pipelines/"
     schema_filepath = SCHEMAS_DIR / "pipeline.json"
-
     parent_stream_type = TenantsStream
 
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
@@ -144,20 +126,18 @@ class PipelinesStream(ArchStream):
         """Return a context dictionary for a child stream."""
         return {
             "org_id": context["org_id"],
-            "project_id": context["project_id"],
             "tenant_id": context["tenant_id"],
             "pipeline_id": record["id"],
         }
 
 
 class PipelineSyncsStream(ArchStream):
-    """Define Pipelines stream."""
+    """Define Pipeline Syncs stream."""
 
     records_jsonpath = "$.results[*]"
     name = "pipeline_syncs"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/tenants/{tenant_id}/pipelines/{pipeline_id}/syncs/"  # noqa: E501
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/pipelines/{pipeline_id}/syncs/"
     schema_filepath = SCHEMAS_DIR / "sync.json"
-
     parent_stream_type = PipelinesStream
 
 
@@ -165,7 +145,7 @@ class DatabasesStream(ArchStream):
     """Define databases stream."""
 
     name = "databases"
-    path = "/v1/orgs/{org_id}/projects/{project_id}/tenants/{tenant_id}/databases/"
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/databases/"
     schema_filepath = SCHEMAS_DIR / "database.json"
     parent_stream_type = TenantsStream
 
@@ -173,27 +153,23 @@ class DatabasesStream(ArchStream):
         """Return a context dictionary for a child stream."""
         return {
             "org_id": context["org_id"],
-            "project_id": context["project_id"],
             "tenant_id": context["tenant_id"],
             "database_id": record["id"],
         }
 
 
 class TransformsStream(ArchStream):
-    """Define Pipelines stream."""
+    """Define Transforms stream."""
 
     name = "transforms"
-
-    path = "/v1/orgs/{org_id}/projects/{project_id}/tenants/{tenant_id}/databases/{database_id}/transforms/"
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/databases/{database_id}/transforms/"
     schema_filepath = SCHEMAS_DIR / "transform.json"
-
     parent_stream_type = DatabasesStream
 
     def get_child_context(self, record: dict, context: dict | None) -> dict:
         """Return a context dictionary for a child stream."""
         return {
             "org_id": context["org_id"],
-            "project_id": context["project_id"],
             "tenant_id": context["tenant_id"],
             "database_id": context["database_id"],
             "transform_id": record["id"],
@@ -201,13 +177,10 @@ class TransformsStream(ArchStream):
 
 
 class TransformSyncsStream(ArchStream):
-    """Define Pipelines stream."""
+    """Define Transform Syncs stream."""
 
     name = "transform_syncs"
-
     records_jsonpath = "$.results[*]"
-
-    path = "/v1/orgs/{org_id}/projects/{project_id}/tenants/{tenant_id}/databases/{database_id}/transforms/{transform_id}/syncs/"  # noqa E501
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/databases/{database_id}/transforms/{transform_id}/syncs/"
     schema_filepath = SCHEMAS_DIR / "sync.json"
-
     parent_stream_type = TransformsStream

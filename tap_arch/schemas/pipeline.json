@@ -856,7 +856,7 @@
     },
     "health": {
       "type": "string",
-      "enum": ["healthy", "unhealthy", "needs_attention"],
+      "enum": ["healthy", "unhealthy", "needs_attention", "uninitiated"],
       "title": "TaskHealthStatus",
       "description": "Health states for Arch tasks."
     },

@@ -28,7 +28,7 @@
       "pattern": "^[a-zA-Z0-9\\-]{1,63}$",
       "format": "arch-tenant-id",
       "title": "External Id",
-      "description": "The ID of the tenant. Must be unique within a project."
+      "description": "The ID of the tenant."
     },
     "name": {
       "type": "string",
@@ -62,7 +62,7 @@
     },
     "health": {
       "type": "string",
-      "enum": ["healthy", "unhealthy", "needs_attention"],
+      "enum": ["healthy", "unhealthy", "needs_attention", "uninitiated"],
       "title": "TenantHealthStatus",
       "description": "Health states for tenants."
     }
@@ -71,7 +71,6 @@
   "required": [
     "id",
     "description",
-    "external_id",
     "name",
     "project_id",
     "database_id",
