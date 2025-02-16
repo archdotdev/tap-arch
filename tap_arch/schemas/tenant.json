@@ -22,22 +22,27 @@
       "title": "Description"
     },
     "external_id": {
-      "type": "string",
-      "maxLength": 63,
-      "minLength": 1,
-      "pattern": "^[a-zA-Z0-9\\-]{1,63}$",
-      "format": "arch-tenant-id",
-      "title": "External Id",
-      "description": "The ID of the tenant."
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9\\-]{1,63}$",
+          "format": "arch-tenant-id",
+          "title": "External Id",
+          "description": "The ID of the tenant."
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "External Id"
     },
     "name": {
       "type": "string",
       "title": "Name"
     },
-    "project_id": {
-      "type": "string",
-      "title": "Project Id"
-    },
+
     "database_id": {
       "anyOf": [
         {
@@ -72,7 +77,6 @@
     "id",
     "description",
     "name",
-    "project_id",
     "database_id",
     "created_at",
     "health"
