@@ -1,0 +1,215 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 18,
+      "minLength": 18,
+      "pattern": "^connector-[a-zA-Z0-9]{8}$",
+      "format": "arch-connector-id",
+      "title": "Id",
+      "description": "Arch connector ID.",
+      "examples": [
+        "connector-abcdef12",
+        "connector-tarch230",
+        "connector-3me1ty44"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "package_name": {
+      "type": "string",
+      "title": "Package Name",
+      "description": "The PyPI name or repository URL of the package.",
+      "examples": ["tap-dbt", "https://github.com/MeltanoLabs/tap-github"]
+    },
+    "package_type": {
+      "type": "string",
+      "title": "Package Type"
+    },
+    "kind": {
+      "type": "string",
+      "title": "Kind"
+    },
+    "version": {
+      "type": "string",
+      "title": "Version"
+    },
+    "namespace": {
+      "type": "string",
+      "title": "Namespace"
+    },
+    "executable": {
+      "type": "string",
+      "title": "Executable"
+    },
+    "capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Capabilities"
+    },
+    "logo_url": {
+      "type": "string",
+      "title": "Logo Url"
+    },
+    "label": {
+      "type": "string",
+      "title": "Label"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "repository_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Repository Url"
+    },
+    "oauth_provider": {
+      "anyOf": [
+        {
+          "type": "string",
+          "title": "OAuth Provider"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "git_repository_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 23,
+          "minLength": 23,
+          "pattern": "^git_repository-[a-zA-Z0-9]{8}$",
+          "format": "arch-git_repository-id",
+          "description": "Git repository ID.",
+          "examples": [
+            "git_repository-abcdef12",
+            "git_repository-tarch230",
+            "git_repository-3me1ty44"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Git Repository Id"
+    },
+    "settings_group_validation": {
+      "items": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "type": "array",
+      "title": "Settings Group Validation",
+      "default": []
+    },
+    "meltano_metadata": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Meltano Metadata"
+    },
+    "variant": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Variant"
+    },
+    "meltano_select": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Meltano Select"
+    },
+    "supported_python_versions": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Supported Python Versions"
+    },
+    "sdk_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Sdk Version"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "package_name",
+    "package_type",
+    "kind",
+    "version",
+    "namespace",
+    "executable",
+    "capabilities",
+    "logo_url",
+    "label",
+    "created_at",
+    "description",
+    "repository_url",
+    "oauth_provider",
+    "git_repository_id"
+  ],
+  "title": "MeltanoPlugin",
+  "description": "Meltano plugin model."
+}

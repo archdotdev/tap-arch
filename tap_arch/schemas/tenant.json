@@ -22,22 +22,27 @@
       "title": "Description"
     },
     "external_id": {
-      "type": "string",
-      "maxLength": 63,
-      "minLength": 1,
-      "pattern": "^[a-zA-Z0-9\\-]{1,63}$",
-      "format": "arch-tenant-id",
-      "title": "External Id",
-      "description": "The ID of the tenant. Must be unique within a project."
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 63,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9\\-]{1,63}$",
+          "format": "arch-tenant-id",
+          "title": "External Id",
+          "description": "The ID of the tenant."
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "External Id"
     },
     "name": {
       "type": "string",
       "title": "Name"
     },
-    "project_id": {
-      "type": "string",
-      "title": "Project Id"
-    },
+
     "database_id": {
       "anyOf": [
         {
@@ -62,7 +67,7 @@
     },
     "health": {
       "type": "string",
-      "enum": ["healthy", "unhealthy", "needs_attention"],
+      "enum": ["healthy", "unhealthy", "needs_attention", "uninitiated"],
       "title": "TenantHealthStatus",
       "description": "Health states for tenants."
     }
@@ -71,9 +76,7 @@
   "required": [
     "id",
     "description",
-    "external_id",
     "name",
-    "project_id",
     "database_id",
     "created_at",
     "health"

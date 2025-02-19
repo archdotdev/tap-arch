@@ -27,7 +27,7 @@ class TapArch(Tap):
             th.ArrayType(th.StringType),
             required=True,
             title="Org IDs",
-            description="Project IDs to replicate",
+            description="Organization IDs to replicate",
         ),
         th.Property(
             "api_url",
@@ -51,7 +51,6 @@ class TapArch(Tap):
         """
         return [
             streams.OrgsStream(self),
-            streams.ProjectsStream(self),
             streams.TenantsStream(self),
             streams.PipelinesStream(self),
             streams.PipelineSyncsStream(self),
