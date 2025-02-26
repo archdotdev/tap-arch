@@ -18,11 +18,7 @@
       "format": "arch-org-id",
       "title": "Org ID",
       "description": "The ID of the parent organization.",
-      "examples": [
-        "org-abcdef12",
-        "org-tarch230",
-        "org-3me1ty44"
-      ]
+      "examples": ["org-abcdef12", "org-tarch230", "org-3me1ty44"]
     },
     "tenant_id": {
       "type": "string",
@@ -33,19 +29,6 @@
       "title": "Tenant ID",
       "description": "The ID of the parent tenant.",
       "examples": ["tenant-abcdef12", "tenant-tarch230", "tenant-3me1ty44"]
-    },
-    "pipeline_id": {
-      "type": "string",
-      "maxLength": 17,
-      "minLength": 17,
-      "pattern": "^pipeline-[a-zA-Z0-9]{8}$",
-      "format": "arch-pipeline-id",
-      "description": "The ID of the parent pipeline.",
-      "examples": [
-        "pipeline-abcdef12",
-        "pipeline-tarch230",
-        "pipeline-3me1ty44"
-      ]
     },
     "task_id": {
       "anyOf": [
