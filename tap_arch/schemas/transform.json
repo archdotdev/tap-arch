@@ -14,9 +14,29 @@
         "transform-3me1ty44"
       ]
     },
-    "name": {
+    "org_id": {
       "type": "string",
-      "title": "Name"
+      "maxLength": 12,
+      "minLength": 12,
+      "pattern": "^org-[a-zA-Z0-9]{8}$",
+      "format": "arch-org-id",
+      "title": "Org ID",
+      "description": "The ID of the parent organization.",
+      "examples": [
+        "org-abcdef12",
+        "org-tarch230",
+        "org-3me1ty44"
+      ]
+    },
+    "tenant_id": {
+      "type": "string",
+      "maxLength": 15,
+      "minLength": 15,
+      "pattern": "^tenant-[a-zA-Z0-9]{8}$",
+      "format": "arch-tenant-id",
+      "title": "Tenant ID",
+      "description": "The ID of the parent tenant.",
+      "examples": ["tenant-abcdef12", "tenant-tarch230", "tenant-3me1ty44"]
     },
     "database_id": {
       "type": "string",
@@ -27,6 +47,10 @@
       "title": "Database Id",
       "description": "Arch database ID.",
       "examples": ["db-abcdef12", "db-tarch230", "db-3me1ty44"]
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
     },
     "dbt_project_id": {
       "type": "string",

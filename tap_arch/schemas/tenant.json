@@ -10,6 +10,20 @@
       "description": "Arch tenant ID.",
       "examples": ["tenant-abcdef12", "tenant-tarch230", "tenant-3me1ty44"]
     },
+    "org_id": {
+      "type": "string",
+      "maxLength": 12,
+      "minLength": 12,
+      "pattern": "^org-[a-zA-Z0-9]{8}$",
+      "format": "arch-org-id",
+      "title": "Org ID",
+      "description": "The ID of the parent organization.",
+      "examples": [
+        "org-abcdef12",
+        "org-tarch230",
+        "org-3me1ty44"
+      ]
+    },
     "description": {
       "anyOf": [
         {
