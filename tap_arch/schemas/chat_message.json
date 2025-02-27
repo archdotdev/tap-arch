@@ -1,5 +1,28 @@
 {
   "properties": {
+    "org_id": {
+      "type": "string",
+      "maxLength": 12,
+      "minLength": 12,
+      "pattern": "^org-[a-zA-Z0-9]{8}$",
+      "format": "arch-org-id",
+      "title": "Org ID",
+      "description": "The ID of the parent organization.",
+      "examples": [
+        "org-abcdef12",
+        "org-tarch230",
+        "org-3me1ty44"
+      ]
+    },
+    "chat_thread_id": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 20,
+      "pattern": "^chat-thread-[a-zA-Z0-9]{8}$",
+      "format": "arch-chat-thread-id",
+      "title": "Chat Thread Id",
+      "description": "The ID of the parent chat thread."
+    },
     "sender_type": {
       "type": "string",
       "enum": ["user", "tool", "ai"],
