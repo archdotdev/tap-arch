@@ -22,11 +22,7 @@
       "format": "arch-org-id",
       "title": "Org ID",
       "description": "The ID of the parent organization.",
-      "examples": [
-        "org-abcdef12",
-        "org-tarch230",
-        "org-3me1ty44"
-      ]
+      "examples": ["org-abcdef12", "org-tarch230", "org-3me1ty44"]
     },
     "tenant_id": {
       "type": "string",
@@ -897,13 +893,10 @@
   "required": [
     "id",
     "name",
-    "database_id",
     "dbt_project_id",
     "dbt_commands",
     "created_at",
-    "updated_at",
-    "schedule",
-    "schedule_paused"
+    "updated_at"
   ],
   "title": "Transform",
   "description": "Transform model."

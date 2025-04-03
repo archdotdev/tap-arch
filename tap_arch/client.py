@@ -7,7 +7,7 @@ from importlib import resources
 
 from singer_sdk.authenticators import BearerTokenAuthenticator
 from singer_sdk.helpers.jsonpath import extract_jsonpath
-from singer_sdk.pagination import BaseAPIPaginator  # noqa: TCH002
+from singer_sdk.pagination import BaseAPIPaginator  # noqa: TC002
 from singer_sdk.streams import RESTStream
 
 if t.TYPE_CHECKING:
@@ -21,7 +21,7 @@ SCHEMAS_DIR = resources.files(__package__) / "schemas"
 class ArchStream(RESTStream):
     """Arch stream class."""
 
-    records_jsonpath = "$[*]"
+    records_jsonpath = "$.results[*]"
 
     next_page_token_jsonpath = "$.pagination.next_page_token"  # noqa: S105
 

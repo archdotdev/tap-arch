@@ -195,10 +195,7 @@
   "required": [
     "id",
     "name",
-    "package_name",
-    "package_type",
     "kind",
-    "version",
     "namespace",
     "executable",
     "capabilities",
