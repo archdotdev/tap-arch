@@ -22,11 +22,7 @@
       "format": "arch-org-id",
       "title": "Org ID",
       "description": "The ID of the parent organization.",
-      "examples": [
-        "org-abcdef12",
-        "org-tarch230",
-        "org-3me1ty44"
-      ]
+      "examples": ["org-abcdef12", "org-tarch230", "org-3me1ty44"]
     },
     "tenant_id": {
       "type": "string",
@@ -905,8 +901,6 @@
     "updated_at",
     "selection_mode",
     "max_concurrent_syncs",
-    "schedule",
-    "schedule_paused",
     "health"
   ],
   "title": "Pipeline",

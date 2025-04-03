@@ -10,6 +10,7 @@ from tap_arch.client import ArchStream
 SCHEMAS_DIR = resources.files(__package__) / "schemas"
 
 
+#    records_jsonpath = "$.[*]"
 class OrgsStream(ArchStream):
     """Define custom stream."""
 
@@ -28,7 +29,7 @@ class OrgsStream(ArchStream):
         # If we define org_ids in the config, only return records for those orgs
         if self.config.get("org_ids"):
             for record in super().get_records(context):
-                if record["id"] in self.config["org_ids"]:
+                if record.get("id") in self.config["org_ids"]:
                     yield record
         # Otherwise, return all records
         else:
@@ -42,13 +43,14 @@ class GitRepositoriesStream(ArchStream):
     path = "/v1/orgs/{org_id}/git_repositories/"
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "git_repository.json"
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
             # Add parent context IDs to each record
             record["org_id"] = context["org_id"]
             yield record
+
     parent_stream_type = OrgsStream
 
 
@@ -60,7 +62,7 @@ class WebhooksStream(ArchStream):
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "webhook.json"
     parent_stream_type = OrgsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
@@ -77,7 +79,7 @@ class ChatThreadsStream(ArchStream):
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "chat_thread.json"
     parent_stream_type = OrgsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
@@ -100,7 +102,7 @@ class ChatMessagesStream(ArchStream):
     path = "/v1/orgs/{org_id}/chats/{chat_thread_id}/messages/"
     schema_filepath = SCHEMAS_DIR / "chat_message.json"
     parent_stream_type = ChatThreadsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
@@ -117,7 +119,7 @@ class TenantsStream(ArchStream):
     path = "/v1/orgs/{org_id}/tenants/"
     schema_filepath = SCHEMAS_DIR / "tenant.json"
     parent_stream_type = OrgsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
@@ -149,13 +151,13 @@ class PipelinesStream(ArchStream):
     path = "/v1/orgs/{org_id}/tenants/{tenant_id}/pipelines/"
     schema_filepath = SCHEMAS_DIR / "pipeline.json"
     parent_stream_type = TenantsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
             normalized = self.normalize_record(record)
             normalized["extractor_config"] = str(record["extractor_config"])
-            normalized["loader_config"] = str(record["loader_config"]) 
+            normalized["loader_config"] = str(record["loader_config"])
             # Add parent context IDs to each record
             normalized["org_id"] = context["org_id"]
             normalized["tenant_id"] = context["tenant_id"]
@@ -196,7 +198,7 @@ class DatabasesStream(ArchStream):
     path = "/v1/orgs/{org_id}/tenants/{tenant_id}/databases/"
     schema_filepath = SCHEMAS_DIR / "database.json"
     parent_stream_type = TenantsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
@@ -220,17 +222,16 @@ class TransformsStream(ArchStream):
     """Define Transforms stream."""
 
     name = "transforms"
-    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/databases/{database_id}/transforms/"
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/transforms/"
     schema_filepath = SCHEMAS_DIR / "transform.json"
-    parent_stream_type = DatabasesStream
+    parent_stream_type = TenantsStream
 
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
             # Add parent context IDs to each record
             record["org_id"] = context["org_id"]
-            record["tenant_id"] = context["tenant_id"] 
-            record["database_id"] = context["database_id"]
+            record["tenant_id"] = context["tenant_id"]
             yield record
 
     def get_child_context(self, record: dict, context: dict | None) -> dict:
@@ -238,7 +239,6 @@ class TransformsStream(ArchStream):
         return {
             "org_id": context["org_id"],
             "tenant_id": context["tenant_id"],
-            "database_id": context["database_id"],
             "transform_id": record["id"],
         }
 
@@ -248,16 +248,15 @@ class TransformSyncsStream(ArchStream):
 
     name = "transform_syncs"
     records_jsonpath = "$.results[*]"
-    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/databases/{database_id}/transforms/{transform_id}/syncs/"
+    path = "/v1/orgs/{org_id}/tenants/{tenant_id}/transforms/{transform_id}/syncs/"
     schema_filepath = SCHEMAS_DIR / "sync.json"
     parent_stream_type = TransformsStream
-    
+
     def get_records(self, context: dict | None) -> t.Iterable[dict[str, t.Any]]:
         """Return a generator of records with parent IDs added."""
         for record in super().get_records(context):
             # Add parent context IDs to each record
             record["org_id"] = context["org_id"]
             record["tenant_id"] = context["tenant_id"]
-            record["database_id"] = context["database_id"] 
             record["transform_id"] = context["transform_id"]
             yield record
